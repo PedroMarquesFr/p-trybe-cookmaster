@@ -17,7 +17,7 @@ const getByEmail = async (email) => {
     const result = await connection().then((db) =>
       db.collection("users").findOne({ email })
     );
-    console.log(result)
+    // console.log(result)
     return result;
   } catch (err) {
     console.error(err);

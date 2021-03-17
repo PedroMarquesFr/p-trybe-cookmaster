@@ -13,7 +13,7 @@ const newRecipe = async (recipeName, ingredients, preparation, userId) => {
   if (resp) {
     return { recipe: { ...resp } };
   }
-  return errMessage("deu pau ai", 400)
+  return errMessage("deu pau ai", 400);
 };
 
 module.exports = { newRecipe };

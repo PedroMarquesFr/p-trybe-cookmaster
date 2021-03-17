@@ -20,4 +20,8 @@ app.get('/', (request, response) => {
 
 app.use(router);
 
+app.use((err, req, res, next) => {
+  res.status(500).send({ error: `${err} ou algum erro interno` });
+});
+
 app.listen(process.env.PORT, () => console.log(`listen port: ${process.env.PORT}`));

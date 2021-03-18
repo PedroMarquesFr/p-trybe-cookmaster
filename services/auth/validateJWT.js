@@ -8,12 +8,12 @@ module.exports = (requireAdmin) => {
     const token = req.headers["authorization"];
 
     if (!token) {
-      res.status(400).json({ error: "jwt malformed" });
+      res.status(401).json({ message: "missing auth token" });
     }
 
     try {
       const decoded = jwt.verify(token, segredo);
-    //   console.log("decoded: ",decoded);
+      console.log("decoded: ",decoded);
       if (requireAdmin && !decoded.data.isAdmin) {
         res.status(200).json(400, {
           error: "Acesso negado. Você não tem permissão de admin",

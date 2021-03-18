@@ -31,7 +31,10 @@ const listRecipes = async () => {
 const listRecipesById = async (id) => {
   try {
     const result = await connection().then((db) =>
-      db.collection("recipes").find({_id:ObjectId(id)}).toArray()
+      db
+        .collection("recipes")
+        .find({ _id: ObjectId(id) })
+        .toArray()
     );
     console.log(result[0]);
     return result[0];
@@ -41,4 +44,41 @@ const listRecipesById = async (id) => {
   }
 };
 
-module.exports = { createRecipe, listRecipes, listRecipesById };
+const editRecipesById = async (name, ingredients, preparation, id) => {
+  try {
+    const result = await connection().then((db) =>
+      db
+        .collection("recipes")
+        .updateOne(
+          { _id: ObjectId(id) },
+          { $set: { name, ingredients, preparation } }
+        )
+    );
+    console.log("result", result);
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+const deleteRecipesById = async (id) => {
+  try {
+    const result = await connection().then((db) =>
+      db.collection("recipes").deleteOne({ _id: ObjectId(id) })
+    );
+    console.log("result", result);
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+module.exports = {
+  createRecipe,
+  listRecipes,
+  listRecipesById,
+  editRecipesById,
+  deleteRecipesById,
+};

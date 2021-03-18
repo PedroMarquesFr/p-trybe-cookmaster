@@ -1,6 +1,5 @@
 const recipeServices = require("../services/recipesServices");
 const recipesModel = require("../models/recipesModel");
-const errMessage = require("../services/errMessage");
 
 const newRecipe = async (req, res) => {
   console.log("recipe: ", req.user, req.body);
@@ -29,4 +28,29 @@ const listRecipesById = async (req, res) => {
   });
 };
 
-module.exports = { newRecipe, listRecipes, listRecipesById };
+const editRecipe = async (req, res) => {
+  const { _id, role } = req.user;
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+
+  const resp = await recipeServices.editRecipe(
+    { _id, role },
+    { name, ingredients, preparation, id }
+  );
+
+  res.status(resp.status ? resp.status : 200).json(resp);
+};
+
+const deleteRecipe = async (req, res) => {
+  const { _id, role } = req.user;
+  const { id } = req.params;
+
+  const resp = await recipeServices.deleteRecipe(
+    { _id, role },
+    id
+  );
+
+  res.status(resp.status ? resp.status : 204).json(resp);
+};
+
+module.exports = { newRecipe, listRecipes, listRecipesById, editRecipe, deleteRecipe };

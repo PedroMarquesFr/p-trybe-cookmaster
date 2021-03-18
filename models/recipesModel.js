@@ -75,10 +75,29 @@ const deleteRecipesById = async (id) => {
   }
 };
 
+const addImage = async (id) => {
+  try {
+    const result = await connection().then((db) =>
+      db
+        .collection("recipes")
+        .updateOne(
+          { _id: ObjectId(id) },
+          { $set: { image:`localhost:3000/images/${id}.jpeg`} }
+        )
+    );
+    console.log("result", result);
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 module.exports = {
   createRecipe,
   listRecipes,
   listRecipesById,
   editRecipesById,
   deleteRecipesById,
+  addImage
 };

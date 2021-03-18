@@ -23,6 +23,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callback) => {
     callback(null, req.params.id + ".jpeg");
+    // path.extname(file.originalname)
   },
 });
 const upload = multer({ storage });
@@ -43,7 +44,7 @@ router.put(
   upload.single("image"),
   async (req, res, next) => {
     await addImage(req.params.id);
-    console.log("ENTROU")
+    console.log("ENTROU");
     next();
   },
   listRecipesById

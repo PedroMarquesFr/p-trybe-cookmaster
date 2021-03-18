@@ -13,10 +13,11 @@ module.exports = (requireAdmin) => {
 
     try {
       const decoded = jwt.verify(token, segredo);
-      console.log("decoded: ",decoded);
-      if (requireAdmin && !decoded.data.isAdmin) {
-        res.status(200).json(400, {
-          error: "Acesso negado. Você não tem permissão de admin",
+      console.log("decoded: ",decoded, (decoded.data.role != "admin"), requireAdmin);
+      if (requireAdmin && decoded.data.role != "admin") {
+        console.log("entrou")
+        return res.status(403).json( {
+          message: "Only admins can register new admins",
         });
       }
 

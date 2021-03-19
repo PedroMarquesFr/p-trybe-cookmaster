@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.use("/images", express.static(path.join(__dirname, "uploads")));
+router.use("/images", express.static(path.join(__dirname, "../uploads")));
 
 router.post("/users", createUser);
 router.post("/users/admin", validateJWT(true), createUser);

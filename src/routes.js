@@ -1,5 +1,4 @@
 const express = require("express");
-const multer = require("multer");
 
 const path = require("path");
 
@@ -14,19 +13,9 @@ const {
 const { addImage } = require("./models/recipesModel");
 const { createUser } = require("./controllers/userController");
 const validateJWT = require("./services/auth/validateJWT");
+const upload = require("./services/multer/multerSetupRecipeImages");
 
 const router = express.Router();
-
-const storage = multer.diskStorage({
-  destination: (res, file, callback) => {
-    callback(null, "uploads/");
-  },
-  filename: (req, file, callback) => {
-    callback(null, req.params.id + ".jpeg");
-    // path.extname(file.originalname)
-  },
-});
-const upload = multer({ storage });
 
 router.use("/images", express.static(path.join(__dirname, "../uploads")));
 

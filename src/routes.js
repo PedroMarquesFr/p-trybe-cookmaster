@@ -12,8 +12,8 @@ const {
 } = require("./controllers/recipesController");
 const { addImage } = require("./models/recipesModel");
 const { createUser } = require("./controllers/userController");
-const validateJWT = require("./services/auth/validateJWT");
-const upload = require("./services/multer/multerSetupRecipeImages");
+const validateJWT = require("./middlewares/validateJWT");
+const upload = require("./middlewares/multerSetupRecipeImages");
 
 const router = express.Router();
 

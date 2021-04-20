@@ -18,7 +18,7 @@ const newRecipe = async (recipeName, ingredients, preparation, userId) => {
 };
 
 const editRecipe = async (userInfo, recipeInfo) => {
-  const a = await recipesModel.listRecipesById( recipeInfo.id );
+  const a = await recipesModel.listRecipesById(recipeInfo.id);
   if (!a) return errMessage('Id da receita invalido', 401);
   if (userInfo.role === 'admin' || userInfo.userId.toString() === a.userId.toString()) {
     await recipesModel.editRecipesById(

@@ -1,7 +1,6 @@
-const mongoClient = require("mongodb");
+const mongoClient = require('mongodb');
 
-const connection = () => {
-  return mongoClient
+const connection = () => mongoClient
     .connect(process.env.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -11,6 +10,5 @@ const connection = () => {
       console.error(err);
       process.exit(1);
     });
-};
 
 module.exports = connection;

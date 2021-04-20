@@ -1,13 +1,12 @@
-const connection = require("./connection");
-const { ObjectId } = require("mongodb");
+const { ObjectId } = require('mongodb');
+const connection = require('./connection');
 
 const createRecipe = async (name, ingredients, preparation, userId) => {
   try {
     const result = await connection().then((db) =>
       db
-        .collection("recipes")
-        .insertOne({ name, ingredients, preparation, userId: ObjectId(userId) })
-    );
+        .collection('recipes')
+        .insertOne({ name, ingredients, preparation, userId: ObjectId(userId) }));
     return { ...result.ops[0] };
   } catch (err) {
     console.error(err);
@@ -18,8 +17,7 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
 const listRecipes = async () => {
   try {
     const result = await connection().then((db) =>
-      db.collection("recipes").find().toArray()
-    );
+      db.collection('recipes').find().toArray());
     console.log(result);
     return result;
   } catch (err) {
@@ -32,10 +30,9 @@ const listRecipesById = async (id) => {
   try {
     const result = await connection().then((db) =>
       db
-        .collection("recipes")
+        .collection('recipes')
         .find({ _id: ObjectId(id) })
-        .toArray()
-    );
+        .toArray());
     console.log(result[0]);
     return result[0];
   } catch (err) {
@@ -48,13 +45,12 @@ const editRecipesById = async (name, ingredients, preparation, id) => {
   try {
     const result = await connection().then((db) =>
       db
-        .collection("recipes")
+        .collection('recipes')
         .updateOne(
           { _id: ObjectId(id) },
-          { $set: { name, ingredients, preparation } }
-        )
-    );
-    console.log("result", result);
+          { $set: { name, ingredients, preparation } },
+        ));
+    console.log('result', result);
     return result;
   } catch (err) {
     console.error(err);
@@ -65,9 +61,8 @@ const editRecipesById = async (name, ingredients, preparation, id) => {
 const deleteRecipesById = async (id) => {
   try {
     const result = await connection().then((db) =>
-      db.collection("recipes").deleteOne({ _id: ObjectId(id) })
-    );
-    console.log("result", result);
+      db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+    console.log('result', result);
     return result;
   } catch (err) {
     console.error(err);
@@ -79,19 +74,18 @@ const addImage = async (id) => {
   try {
     const result = await connection().then((db) =>
       db
-        .collection("recipes")
+        .collection('recipes')
         .updateOne(
           { _id: ObjectId(id) },
-          { $set: { image:`localhost:3000/images/${id}.jpeg`} }
-        )
-    );
-    console.log("result", result);
+          { $set: { image: `localhost:3000/images/${id}.jpeg` } },
+        ));
+    console.log('result', result);
     return result;
   } catch (err) {
     console.error(err);
     return null;
   }
-}
+};
 
 module.exports = {
   createRecipe,
@@ -99,5 +93,5 @@ module.exports = {
   listRecipesById,
   editRecipesById,
   deleteRecipesById,
-  addImage
+  addImage,
 };

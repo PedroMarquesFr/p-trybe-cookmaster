@@ -18,13 +18,10 @@ const newRecipe = async (recipeName, ingredients, preparation, userId) => {
 };
 
 const editRecipe = async (userInfo, recipeInfo) => {
-  const doesRecipeWithIdExists = await recipesModel.listRecipesById(recipeInfo.id);
-  if (!doesRecipeWithIdExists) return errMessage('Id da receita invalido', 401);
-  if (
-    userInfo.role === 'admin'
-    || userInfo._id.toString() === doesRecipeWithIdExists.userId.toString()
-  ) {
-    const editedRecipe = await recipesModel.editRecipesById(
+  const a = await recipesModel.listRecipesById( recipeInfo.id );
+  if (!a) return errMessage('Id da receita invalido', 401);
+  if (userInfo.role === 'admin' || userInfo.userId.toString() === a.userId.toString()) {
+    await recipesModel.editRecipesById(
       recipeInfo.name,
       recipeInfo.ingredients,
       recipeInfo.preparation,
@@ -35,7 +32,7 @@ const editRecipe = async (userInfo, recipeInfo) => {
       ingredients: recipeInfo.ingredients,
       preparation: recipeInfo.preparation,
       _id: recipeInfo.id,
-      userId: userInfo._id,
+      userId: userInfo.userId,
     };
   }
   return errMessage('Nao eh o dono da receita nem o admin', 401);
@@ -44,10 +41,10 @@ const editRecipe = async (userInfo, recipeInfo) => {
 const deleteRecipe = async (userInfo, id) => {
   const doesRecipeWithIdExists = await recipesModel.listRecipesById(id);
   if (!doesRecipeWithIdExists) return errMessage('Id da receita invalido', 401);
-  console.log(userInfo.role, userInfo._id, doesRecipeWithIdExists.userId);
+  console.log(userInfo.role, userInfo.userId, doesRecipeWithIdExists.userId);
   if (
     userInfo.role === 'admin'
-    || userInfo._id.toString() === doesRecipeWithIdExists.userId.toString()
+    || userInfo.userId.toString() === doesRecipeWithIdExists.userId.toString()
   ) {
     await recipesModel.deleteRecipesById(id);
     return {

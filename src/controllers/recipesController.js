@@ -29,12 +29,12 @@ const listRecipesById = async (req, res) => {
 };
 
 const editRecipe = async (req, res) => {
-  const { _id, role } = req.user;
+  const { _id: userId, role } = req.user;
   const { name, ingredients, preparation } = req.body;
   const { id } = req.params;
 
   const resp = await recipeServices.editRecipe(
-    { _id, role },
+    { userId, role },
     { name, ingredients, preparation, id },
   );
 
@@ -42,11 +42,11 @@ const editRecipe = async (req, res) => {
 };
 
 const deleteRecipe = async (req, res) => {
-  const { _id, role } = req.user;
+  const { _id: userId, role } = req.user;
   const { id } = req.params;
 
   const resp = await recipeServices.deleteRecipe(
-    { _id, role },
+    { userId, role },
     id,
   );
 

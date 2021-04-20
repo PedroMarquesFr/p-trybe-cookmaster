@@ -10,12 +10,7 @@ const createUser = async (req, res) => {
     resp.status
       ? resp
       : {
-          user: {
-            name: resp.name,
-            email: resp.email,
-            role: resp.role,
-            _id: resp._id,
-          },
+          user: resp,
         },
   );
 };
